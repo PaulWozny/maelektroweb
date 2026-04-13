@@ -1,0 +1,290 @@
+---
+import { Picture } from 'astro:assets';
+import MainLayout from '../layouts/MainLayout.astro';
+import heroImage from '../assets/images/hero-electrician.jpg';
+
+const services = [
+	{
+		title: 'Instalacje elektryczne',
+		description: 'Projektowanie i wykonanie instalacji dla obiektow przemyslowych, biur oraz hal produkcyjnych.'
+	},
+	{
+		title: 'Modernizacje i rozbudowy',
+		description: 'Unowoczesnienie istniejących systemow z naciskiem na bezpieczenstwo, niezawodnosc i oszczednosc energii.'
+	},
+	{
+		title: 'Przeglady i serwis',
+		description: 'Regularna diagnostyka, szybkie usuwanie awarii i wsparcie techniczne dla firm oraz zakladow.'
+	}
+];
+---
+
+<MainLayout
+	title="MA-Elektro | Uslugi elektryczne dla firm i przemyslu"
+	description="MA-Elektro realizuje instalacje elektryczne dla firm i przemyslu: projektowanie, wykonanie, modernizacje i serwis."
+>
+	<header class="site-header">
+		<div class="container nav">
+			<a class="brand" href="#top">MA-Elektro</a>
+			<nav aria-label="Nawigacja glowna">
+				<a href="#uslugi">Uslugi</a>
+				<a href="#o-nas">O nas</a>
+				<a href="#kontakt">Kontakt</a>
+			</nav>
+		</div>
+	</header>
+
+	<main id="top">
+		<section class="hero">
+			<div class="container hero-grid">
+				<div>
+					<p class="eyebrow">Energia dla Twojego biznesu</p>
+					<h1>Uslugi elektryczne dla firm i przemyslu</h1>
+					<p class="lead">
+						Solidnosc i jakosc na pierwszym miejscu. Realizujemy instalacje od etapu projektu po uruchomienie i
+						serwis powykonawczy.
+					</p>
+					<div class="hero-actions">
+						<a class="button primary" href="#kontakt">Umow konsultacje</a>
+						<a class="button secondary" href="#uslugi">Zobacz zakres prac</a>
+					</div>
+				</div>
+
+				<Picture
+					src={heroImage}
+					alt="Elektryk podczas prac instalacyjnych"
+					formats={["avif", "webp"]}
+					widths={[480, 768, 1200, 1800]}
+					sizes="(max-width: 900px) 100vw, 50vw"
+					loading="eager"
+					class="hero-image"
+				/>
+			</div>
+		</section>
+
+		<section id="uslugi" class="section">
+			<div class="container">
+				<h2>Zakres uslug</h2>
+				<div class="cards">
+					{
+						services.map((service) => (
+							<article class="card">
+								<h3>{service.title}</h3>
+								<p>{service.description}</p>
+							</article>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<section id="o-nas" class="section section-alt">
+			<div class="container narrow">
+				<h2>Dlaczego MA-Elektro</h2>
+				<p>
+					Pracujemy dla firm, ktore potrzebuja niezawodnej infrastruktury elektrycznej i partnera odpowiedzialnego za
+					terminowa realizacje. Stawiamy na jasna komunikacje, dokumentacje i standardy bezpieczenstwa.
+				</p>
+			</div>
+		</section>
+
+		<section id="kontakt" class="section contact">
+			<div class="container">
+				<h2>Porozmawiajmy o Twojej inwestycji</h2>
+				<p>
+					Napisz lub zadzwon, aby otrzymac wstepna wycene i plan realizacji. Obslugujemy zlecenia dla firm i obiektow
+					przemyslowych.
+				</p>
+				<p class="contact-links">
+					<a href="mailto:biuro@ma-elektro.pl">biuro@ma-elektro.pl</a>
+					<span aria-hidden="true">|</span>
+					<a href="tel:+48500000000">+48 500 000 000</a>
+				</p>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="container">
+			<p>© {new Date().getFullYear()} MA-Elektro. Wszystkie prawa zastrzezone.</p>
+		</div>
+	</footer>
+</MainLayout>
+
+<style>
+	:global(body) {
+		margin: 0;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		color: #0f1f2a;
+		background: radial-gradient(circle at 10% 0%, #e9f4ff 0%, #f6fbff 45%, #ffffff 100%);
+	}
+
+	.container {
+		width: min(1120px, 92vw);
+		margin: 0 auto;
+	}
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		background: rgba(255, 255, 255, 0.9);
+		backdrop-filter: blur(8px);
+		border-bottom: 1px solid #d5e5f4;
+		z-index: 10;
+	}
+
+	.nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		min-height: 68px;
+	}
+
+	.brand {
+		color: #073451;
+		text-decoration: none;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+	}
+
+	nav {
+		display: flex;
+		gap: 1rem;
+	}
+
+	nav a {
+		text-decoration: none;
+		color: #234a66;
+		font-weight: 500;
+	}
+
+	.hero {
+		padding: 4.5rem 0 2.5rem;
+	}
+
+	.hero-grid {
+		display: grid;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: #2c6fa1;
+		margin-bottom: 0.75rem;
+		font-size: 0.82rem;
+		font-weight: 600;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: clamp(2rem, 4.2vw, 3.4rem);
+		line-height: 1.06;
+	}
+
+	.lead {
+		margin: 1rem 0 0;
+		color: #365569;
+		font-size: 1.06rem;
+		line-height: 1.65;
+	}
+
+	.hero-actions {
+		margin-top: 1.5rem;
+		display: flex;
+		gap: 0.85rem;
+		flex-wrap: wrap;
+	}
+
+	.button {
+		text-decoration: none;
+		border-radius: 999px;
+		padding: 0.78rem 1.2rem;
+		font-weight: 600;
+	}
+
+	.button.primary {
+		background: #0f5f95;
+		color: white;
+	}
+
+	.button.secondary {
+		background: #deedf9;
+		color: #0e4268;
+	}
+
+	.hero-image {
+		width: 100%;
+		border-radius: 20px;
+		box-shadow: 0 14px 40px rgba(10, 41, 62, 0.18);
+	}
+
+	.section {
+		padding: 3.5rem 0;
+	}
+
+	.section h2 {
+		margin-top: 0;
+		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+	}
+
+	.cards {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+	}
+
+	.card {
+		padding: 1.1rem;
+		border: 1px solid #d7e8f5;
+		border-radius: 14px;
+		background: #ffffff;
+	}
+
+	.card h3 {
+		margin: 0;
+	}
+
+	.section-alt {
+		background: linear-gradient(180deg, #f5faff 0%, #edf7ff 100%);
+		border-top: 1px solid #d4e8f8;
+		border-bottom: 1px solid #d4e8f8;
+	}
+
+	.narrow {
+		max-width: 740px;
+	}
+
+	.contact {
+		text-align: center;
+	}
+
+	.contact-links {
+		display: inline-flex;
+		gap: 0.7rem;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		font-weight: 600;
+	}
+
+	.contact-links a {
+		color: #0f5f95;
+		text-decoration: none;
+	}
+
+	.site-footer {
+		border-top: 1px solid #d5e5f4;
+		text-align: center;
+		padding: 1.2rem 0 2rem;
+		color: #486173;
+		font-size: 0.95rem;
+	}
+
+	@media (min-width: 900px) {
+		.hero-grid {
+			grid-template-columns: 1.08fr 1fr;
+		}
+	}
+</style>
