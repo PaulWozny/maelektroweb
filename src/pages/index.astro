@@ -353,6 +353,8 @@ const highlights = [
 		--brand: #1f4f78;
 		--brand-strong: #173a58;
 		--accent: #e8b031;
+		--topline-bg: #163a59;
+		--topline-text: #ffffff;
 	}
 
 	:global(html[data-theme='dark']) {
@@ -367,11 +369,13 @@ const highlights = [
 		--brand: #7eb4da;
 		--brand-strong: #a5d2f0;
 		--accent: #f2c45d;
+		--topline-bg: #0f2231;
+		--topline-text: #eaf2f8;
 	}
 
 	.topline {
-		background: var(--brand-strong);
-		color: #f8fbff;
+		background: var(--topline-bg);
+		color: var(--topline-text);
 		font-size: 0.86rem;
 	}
 
