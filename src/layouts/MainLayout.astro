@@ -28,6 +28,14 @@ const {
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('theme-preference') || 'system';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const effective = saved === 'system' ? (prefersDark ? 'dark' : 'light') : saved;
+        document.documentElement.setAttribute('data-theme', effective);
+      })();
+    </script>
     <title>{title}</title>
   </head>
   <body>

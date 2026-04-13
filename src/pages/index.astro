@@ -3,34 +3,87 @@ import { Picture } from 'astro:assets';
 import MainLayout from '../layouts/MainLayout.astro';
 import heroImage from '../assets/images/hero-electrician.jpg';
 
-const services = [
+const contactPeople = [
 	{
-		title: 'Instalacje elektryczne',
-		description: 'Projektowanie i wykonanie instalacji dla obiektow przemyslowych, biur oraz hal produkcyjnych.'
+		name: 'Adam Tomeczek',
+		phone: '+48 694 281 426',
+		email: 'adam.tomeczek@ma-elektro.pl',
+		phoneHref: '+48694281426'
 	},
 	{
-		title: 'Modernizacje i rozbudowy',
-		description: 'Unowoczesnienie istniejących systemow z naciskiem na bezpieczenstwo, niezawodnosc i oszczednosc energii.'
+		name: 'Marcin Kopton',
+		phone: '+48 789 565 616',
+		email: 'marcin.kopton@ma-elektro.pl',
+		phoneHref: '+48789565616'
+	}
+];
+
+const serviceTabs = [
+	{
+		id: 'tab-rozdzielnice',
+		label: 'Rozdzielnice',
+		title: 'Montaż i uruchomienie rozdzielnic',
+		description:
+			'Solidnie wykonujemy montaż rozdzielnic zgodnie z aktualnymi normami branżowymi i uruchamiamy je tak, aby zapewnić niezawodną pracę instalacji.'
 	},
 	{
-		title: 'Przeglady i serwis',
-		description: 'Regularna diagnostyka, szybkie usuwanie awarii i wsparcie techniczne dla firm oraz zakladow.'
+		id: 'tab-dostosowanie',
+		label: 'Dostosowanie instalacji',
+		title: 'Dostosowanie instalacji do potrzeb',
+		description:
+			'Każdy projekt dopasowujemy do konkretnego obiektu i procesu. Rozbudowujemy i porządkujemy istniejące instalacje pod nowe wymagania.'
+	},
+	{
+		id: 'tab-remonty',
+		label: 'Remonty',
+		title: 'Profesjonalne remonty instalacji elektrycznych',
+		description:
+			'Prowadzimy działania naprawcze i modernizacyjne przywracające sprawność, bezpieczeństwo oraz przewidywalność pracy instalacji.'
+	},
+	{
+		id: 'tab-prefabrykacja',
+		label: 'Prefabrykacja',
+		title: 'Prefabrykacja rozdzielnic',
+		description:
+			'Oferujemy prefabrykację rozdzielnic z naciskiem na dokładność wykonania, krótszy czas montażu i spójność techniczną na inwestycji.'
+	},
+	{
+		id: 'tab-pomiary',
+		label: 'Pomiary',
+		title: 'Pomiary elektryczne',
+		description:
+			'Wykonujemy pomiary z wysoką dokładnością, potwierdzające bezpieczeństwo i zgodność instalacji z wymaganiami i normami.'
+	},
+	{
+		id: 'tab-modernizacje',
+		label: 'Modernizacje',
+		title: 'Efektywne modernizacje technologiczne',
+		description:
+			'Planujemy i wdrażamy modernizacje, które poprawiają niezawodność układu i wspierają efektywność działania obiektu.'
 	}
 ];
 ---
 
 <MainLayout
-	title="MA-Elektro | Uslugi elektryczne dla firm i przemyslu"
-	description="MA-Elektro realizuje instalacje elektryczne dla firm i przemyslu: projektowanie, wykonanie, modernizacje i serwis."
+	title="MA-Elektro | Usługi elektryczne dla firm i przemysłu"
+	description="Usługi elektryczne dla firm i przemysłu: montaż i uruchomienie rozdzielnic, modernizacje, pomiary oraz remonty instalacji."
 >
 	<header class="site-header">
 		<div class="container nav">
 			<a class="brand" href="#top">MA-Elektro</a>
 			<nav aria-label="Nawigacja glowna">
-				<a href="#uslugi">Uslugi</a>
+				<a href="#uslugi">Usługi</a>
 				<a href="#o-nas">O nas</a>
 				<a href="#kontakt">Kontakt</a>
 			</nav>
+			<label class="theme-control" for="theme-select">
+				<span>Motyw</span>
+				<select id="theme-select" aria-label="Wybór motywu">
+					<option value="system">System</option>
+					<option value="light">Jasny</option>
+					<option value="dark">Ciemny</option>
+				</select>
+			</label>
 		</div>
 	</header>
 
@@ -39,13 +92,13 @@ const services = [
 			<div class="container hero-grid">
 				<div>
 					<p class="eyebrow">Energia dla Twojego biznesu</p>
-					<h1>Uslugi elektryczne dla firm i przemyslu</h1>
+					<h1>Usługi elektryczne dla firm i przemysłu</h1>
 					<p class="lead">
-						Solidnosc i jakosc na pierwszym miejscu. Realizujemy instalacje od etapu projektu po uruchomienie i
-						serwis powykonawczy.
+						Solidność i jakość na pierwszym miejscu. Realizujemy instalacje od etapu projektu, przez uruchomienie,
+						aż po wsparcie serwisowe.
 					</p>
 					<div class="hero-actions">
-						<a class="button primary" href="#kontakt">Umow konsultacje</a>
+						<a class="button primary" href="#kontakt">Umów konsultację</a>
 						<a class="button secondary" href="#uslugi">Zobacz zakres prac</a>
 					</div>
 				</div>
@@ -64,13 +117,38 @@ const services = [
 
 		<section id="uslugi" class="section">
 			<div class="container">
-				<h2>Zakres uslug</h2>
-				<div class="cards">
+				<h2>Zakres usług</h2>
+				<p class="section-intro">Kliknij zakładkę, aby zobaczyć szczegóły oferty dla firm i przemysłu.</p>
+				<div class="tabs" data-tabs>
+					<div class="tab-list" role="tablist" aria-label="Zakres usług MA-Elektro">
+						{
+							serviceTabs.map((tab, index) => (
+								<button
+									type="button"
+									class={`tab-button${index === 0 ? ' is-active' : ''}`}
+									id={`${tab.id}-button`}
+									role="tab"
+									aria-selected={index === 0 ? 'true' : 'false'}
+									aria-controls={tab.id}
+									data-tab-target={tab.id}
+								>
+									{tab.label}
+								</button>
+							))
+						}
+					</div>
 					{
-						services.map((service) => (
-							<article class="card">
-								<h3>{service.title}</h3>
-								<p>{service.description}</p>
+						serviceTabs.map((tab, index) => (
+							<article
+								class={`tab-panel${index === 0 ? ' is-active' : ''}`}
+								id={tab.id}
+								role="tabpanel"
+								aria-labelledby={`${tab.id}-button`}
+								tabindex="0"
+								hidden={index === 0 ? undefined : true}
+							>
+								<h3>{tab.title}</h3>
+								<p>{tab.description}</p>
 							</article>
 						))
 					}
@@ -82,8 +160,12 @@ const services = [
 			<div class="container narrow">
 				<h2>Dlaczego MA-Elektro</h2>
 				<p>
-					Pracujemy dla firm, ktore potrzebuja niezawodnej infrastruktury elektrycznej i partnera odpowiedzialnego za
-					terminowa realizacje. Stawiamy na jasna komunikacje, dokumentacje i standardy bezpieczenstwa.
+					Tworzymy zespół dwóch doświadczonych elektryków z pasją do swojej pracy. Stawiamy na terminową realizację,
+					bezpieczeństwo i transparentną współpracę od pierwszego kontaktu.
+				</p>
+				<p>
+					Obsługujemy inwestycje i utrzymanie ruchu dla firm, dbając o trwałość instalacji oraz jakość wykonania
+					potwierdzoną pomiarami i dokumentacją.
 				</p>
 			</div>
 		</section>
@@ -92,31 +174,126 @@ const services = [
 			<div class="container">
 				<h2>Porozmawiajmy o Twojej inwestycji</h2>
 				<p>
-					Napisz lub zadzwon, aby otrzymac wstepna wycene i plan realizacji. Obslugujemy zlecenia dla firm i obiektow
-					przemyslowych.
+					Skontaktuj się bezpośrednio z zespołem MA-Elektro, aby otrzymać wstępną wycenę i plan realizacji.
 				</p>
-				<p class="contact-links">
-					<a href="mailto:biuro@ma-elektro.pl">biuro@ma-elektro.pl</a>
-					<span aria-hidden="true">|</span>
-					<a href="tel:+48500000000">+48 500 000 000</a>
-				</p>
+				<div class="cards contact-cards">
+					{
+						contactPeople.map((person) => (
+							<article class="card">
+								<h3>{person.name}</h3>
+								<p>
+									<a href={`tel:${person.phoneHref}`}>{person.phone}</a>
+								</p>
+								<p>
+									<a href={`mailto:${person.email}`}>{person.email}</a>
+								</p>
+							</article>
+						))
+					}
+				</div>
+				<p class="office">Biuro: 47-320 Gogolin</p>
 			</div>
 		</section>
 	</main>
 
 	<footer class="site-footer">
 		<div class="container">
-			<p>© {new Date().getFullYear()} MA-Elektro. Wszystkie prawa zastrzezone.</p>
+			<p>© {new Date().getFullYear()} MA-Elektro. Wszystkie prawa zastrzeżone.</p>
 		</div>
 	</footer>
 </MainLayout>
+
+<script is:inline>
+	(() => {
+		const select = document.querySelector('#theme-select');
+		if (select instanceof HTMLSelectElement) {
+			const media = window.matchMedia('(prefers-color-scheme: dark)');
+			const applyTheme = (value) => {
+				const effective = value === 'system' ? (media.matches ? 'dark' : 'light') : value;
+				document.documentElement.setAttribute('data-theme', effective);
+			};
+
+			const saved = localStorage.getItem('theme-preference') || 'system';
+			select.value = saved;
+			applyTheme(saved);
+
+			select.addEventListener('change', () => {
+				localStorage.setItem('theme-preference', select.value);
+				applyTheme(select.value);
+			});
+
+			media.addEventListener('change', () => {
+				if (select.value === 'system') {
+					applyTheme('system');
+				}
+			});
+		}
+
+		const tabsRoot = document.querySelector('[data-tabs]');
+		if (!tabsRoot) {
+			return;
+		}
+
+		const tabButtons = Array.from(tabsRoot.querySelectorAll('[data-tab-target]'));
+		const tabPanels = Array.from(tabsRoot.querySelectorAll('.tab-panel'));
+
+		const activateTab = (targetId) => {
+			tabButtons.forEach((button) => {
+				const isActive = button.getAttribute('data-tab-target') === targetId;
+				button.classList.toggle('is-active', isActive);
+				button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+			});
+
+			tabPanels.forEach((panel) => {
+				const isActive = panel.id === targetId;
+				panel.classList.toggle('is-active', isActive);
+				panel.hidden = !isActive;
+			});
+		};
+
+		tabButtons.forEach((button) => {
+			button.addEventListener('click', () => {
+				const target = button.getAttribute('data-tab-target');
+				if (target) {
+					activateTab(target);
+				}
+			});
+		});
+	})();
+</script>
 
 <style>
 	:global(body) {
 		margin: 0;
 		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-		color: #0f1f2a;
-		background: radial-gradient(circle at 10% 0%, #e9f4ff 0%, #f6fbff 45%, #ffffff 100%);
+		color: var(--text-primary);
+		background: radial-gradient(circle at 10% 0%, var(--bg-spot) 0%, var(--bg-soft) 45%, var(--bg-main) 100%);
+	}
+
+	:global(html[data-theme='light']) {
+		--bg-main: #ffffff;
+		--bg-soft: #f6fbff;
+		--bg-spot: #e9f4ff;
+		--surface: #ffffff;
+		--surface-soft: #eef7ff;
+		--border: #d5e5f4;
+		--text-primary: #0f1f2a;
+		--text-muted: #365569;
+		--brand: #0f5f95;
+		--brand-strong: #0b486f;
+	}
+
+	:global(html[data-theme='dark']) {
+		--bg-main: #0c141a;
+		--bg-soft: #0f1d26;
+		--bg-spot: #14324a;
+		--surface: #13222d;
+		--surface-soft: #182d3b;
+		--border: #264054;
+		--text-primary: #e4f0f8;
+		--text-muted: #b5ccdb;
+		--brand: #74c2f1;
+		--brand-strong: #9fd9ff;
 	}
 
 	.container {
@@ -127,9 +304,9 @@ const services = [
 	.site-header {
 		position: sticky;
 		top: 0;
-		background: rgba(255, 255, 255, 0.9);
+		background: color-mix(in srgb, var(--bg-main) 86%, transparent);
 		backdrop-filter: blur(8px);
-		border-bottom: 1px solid #d5e5f4;
+		border-bottom: 1px solid var(--border);
 		z-index: 10;
 	}
 
@@ -137,11 +314,13 @@ const services = [
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
 		min-height: 68px;
 	}
 
 	.brand {
-		color: #073451;
+		color: var(--brand-strong);
 		text-decoration: none;
 		font-weight: 700;
 		letter-spacing: 0.02em;
@@ -154,8 +333,24 @@ const services = [
 
 	nav a {
 		text-decoration: none;
-		color: #234a66;
+		color: var(--text-muted);
 		font-weight: 500;
+	}
+
+	.theme-control {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.55rem;
+		font-size: 0.92rem;
+		color: var(--text-muted);
+	}
+
+	.theme-control select {
+		background: var(--surface);
+		color: var(--text-primary);
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		padding: 0.35rem 0.7rem;
 	}
 
 	.hero {
@@ -171,7 +366,7 @@ const services = [
 	.eyebrow {
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
-		color: #2c6fa1;
+		color: var(--brand);
 		margin-bottom: 0.75rem;
 		font-size: 0.82rem;
 		font-weight: 600;
@@ -185,7 +380,7 @@ const services = [
 
 	.lead {
 		margin: 1rem 0 0;
-		color: #365569;
+		color: var(--text-muted);
 		font-size: 1.06rem;
 		line-height: 1.65;
 	}
@@ -205,13 +400,13 @@ const services = [
 	}
 
 	.button.primary {
-		background: #0f5f95;
+		background: var(--brand);
 		color: white;
 	}
 
 	.button.secondary {
-		background: #deedf9;
-		color: #0e4268;
+		background: var(--surface-soft);
+		color: var(--brand-strong);
 	}
 
 	.hero-image {
@@ -229,6 +424,59 @@ const services = [
 		font-size: clamp(1.5rem, 2.8vw, 2.2rem);
 	}
 
+	.section-intro {
+		margin-top: -0.2rem;
+		margin-bottom: 1.25rem;
+		color: var(--text-muted);
+	}
+
+	.tabs {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 16px;
+		overflow: hidden;
+	}
+
+	.tab-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+		gap: 0;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.tab-button {
+		background: transparent;
+		border: 0;
+		border-right: 1px solid var(--border);
+		padding: 0.85rem 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		color: var(--text-muted);
+	}
+
+	.tab-button:last-child {
+		border-right: 0;
+	}
+
+	.tab-button.is-active {
+		background: var(--surface-soft);
+		color: var(--brand-strong);
+	}
+
+	.tab-panel {
+		padding: 1.15rem;
+	}
+
+	.tab-panel h3 {
+		margin: 0;
+	}
+
+	.tab-panel p {
+		margin: 0.65rem 0 0;
+		color: var(--text-muted);
+		line-height: 1.58;
+	}
+
 	.cards {
 		display: grid;
 		gap: 1rem;
@@ -237,9 +485,9 @@ const services = [
 
 	.card {
 		padding: 1.1rem;
-		border: 1px solid #d7e8f5;
+		border: 1px solid var(--border);
 		border-radius: 14px;
-		background: #ffffff;
+		background: var(--surface);
 	}
 
 	.card h3 {
@@ -247,9 +495,9 @@ const services = [
 	}
 
 	.section-alt {
-		background: linear-gradient(180deg, #f5faff 0%, #edf7ff 100%);
-		border-top: 1px solid #d4e8f8;
-		border-bottom: 1px solid #d4e8f8;
+		background: linear-gradient(180deg, color-mix(in srgb, var(--surface-soft) 70%, transparent) 0%, var(--surface-soft) 100%);
+		border-top: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
 	}
 
 	.narrow {
@@ -258,6 +506,11 @@ const services = [
 
 	.contact {
 		text-align: center;
+	}
+
+	.contact-cards {
+		margin-top: 1.2rem;
+		margin-bottom: 0.8rem;
 	}
 
 	.contact-links {
@@ -270,16 +523,39 @@ const services = [
 	}
 
 	.contact-links a {
-		color: #0f5f95;
+		color: var(--brand);
 		text-decoration: none;
 	}
 
+	.card a {
+		color: var(--brand);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.office {
+		color: var(--text-muted);
+		margin: 0;
+	}
+
 	.site-footer {
-		border-top: 1px solid #d5e5f4;
+		border-top: 1px solid var(--border);
 		text-align: center;
 		padding: 1.2rem 0 2rem;
-		color: #486173;
+		color: var(--text-muted);
 		font-size: 0.95rem;
+	}
+
+	@media (max-width: 820px) {
+		nav {
+			order: 3;
+			width: 100%;
+			justify-content: center;
+		}
+
+		.theme-control {
+			margin-left: auto;
+		}
 	}
 
 	@media (min-width: 900px) {
