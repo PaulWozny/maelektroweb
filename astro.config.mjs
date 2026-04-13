@@ -4,5 +4,6 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	output: 'static',
-	site: 'https://ma-elektro.pl'
+	site: 'https://paulwozny.github.io',
+	base: '/maelektroweb'
 });
